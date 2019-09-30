@@ -1,0 +1,23 @@
+App Description: 
+    - When user opens the app, he enters his name -> redirected to dashboard.
+    - User can be Orderer or Request Submitter.
+
+Backend:
+    -Login:
+        -Make Orders
+        -Delete your own order, recieve requests
+
+    -No login/auth:
+        -Get all active Orderings
+        -Request from orderings
+
+Tables:
+    User: username, password, id
+    Order: user_id, id, restaurant_name, comment
+    Request: request_content, user_name, order_id
+    
+API:
+    user: Login, Register
+    Order: Create, ListAll, ListByUserId, DeleteById
+    Request: CreateForOrderId, ListByOrderId
+    
