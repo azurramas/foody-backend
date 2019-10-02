@@ -1,0 +1,6 @@
+dev: 
+    dbIdbadress: "localhost"
+    dbPort: "3306"
+    name: "foodorder"
+    pass: "azur123"
+    user: "azur"
