@@ -17,7 +17,7 @@ Tables:
     Request: request_content, user_name, order_id
     
 API:
-    user: Login, Register
-    Order: Create, ListAll, ListByUserId, DeleteById
-    Request: CreateForOrderId, ListByOrderId
+    //user: Login, Register
+    Order: Create, ListAll, ListByUserId, DeleteById, GetById
+    //Request: CreateForOrderId, ListByOrderId, ListByUserName
     
