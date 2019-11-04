@@ -18,6 +18,8 @@ Tables:
     
 API:
     //user: Login, Register
-    Order: Create, ListAll, ListByUserId, DeleteById, GetById
+    //Order: //Create(login), //ListAll(no login), //ListByUserId(login), //DeleteById(login), //GetById(no login)
     //Request: CreateForOrderId, ListByOrderId, ListByUserName
+
+    Orders: Username
     

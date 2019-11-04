@@ -26,6 +26,7 @@ func (u *User) Find() (bool, error) {
 		return false, err
 	}
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(u.Password))
+
 	if err == nil {
 		u.ID = user.ID
 

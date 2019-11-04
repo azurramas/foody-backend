@@ -50,6 +50,11 @@ func (rc RequestController) ListByParam(w http.ResponseWriter, r *http.Request) 
 		services.WriteJSON(w, err, 400)
 		return
 	}
+	
+	if len(requests) == 0 {
+		services.WriteJSON(w, "No requests found", http.StatusBadRequest)
+		return
+	}
 
 	services.WriteJSON(w, requests, 200)
 }

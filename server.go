@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"github.com/azurramas/food_ordering/services"
@@ -15,6 +16,7 @@ var (
 	users        controllers.UserControler
 	provider     middleware.Provider
 	mdlw         middleware.Middlewares
+	orders		 controllers.OrdersController	
 )
 
 var err error
@@ -36,16 +38,22 @@ func main(){
 	//Users CRUD
 	r1.HandleFunc("/user", users.Create).Methods("POST")
 	r1.HandleFunc("/login", users.Login).Methods("POST")
-	// r1.HandleFunc("/user/{id:[0-9]+}", users.Get).Methods("GET")
-	// r1.HandleFunc("/users", users.List).Methods("GET")
 
 	//Requests CRUD 
 	//OID - OrderID
 	r1.HandleFunc("/request/{id:[0-9]+}", requests.CreateByOID).Methods("POST")
 	r1.HandleFunc("/requests/{id}", requests.ListByParam).Methods("GET")
+
+	//Orders CRUD
+	r1.HandleFunc("/order", orders.Create).Methods("POST")
+	r1.HandleFunc("/orders", orders.ListAll).Methods("GET")
+	r1.HandleFunc("/user/order", orders.ListByUser).Methods("GET")
+	r1.HandleFunc("/order/{id:[0-9]+}", orders.DeleteOrder).Methods("DELETE")
+
 	
 	n.UseHandler(r1)
 
+	fmt.Println("Server started...")
 	log.Fatal(http.ListenAndServe(":8010", n))
 
 }

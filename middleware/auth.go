@@ -22,8 +22,18 @@ type Provider struct {
 
 // BasicAuth ->
 func (m *Provider) BasicAuth(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	
-	if strings.Contains(r.RequestURI, "/request/") || r.RequestURI == "/user" && r.Method == "POST" || r.Method == "GET" {
+
+	if strings.Contains(r.RequestURI, "/request/") && r.Method == "POST"{
+		next(w, r)
+		return
+	}
+
+	if strings.Contains(r.RequestURI, "/orders") && r.Method == "GET" {
+		next(w, r)
+		return
+	}
+
+	if (r.RequestURI == "/user" && r.Method == "POST") {
 		next(w, r)
 		return
 	}
