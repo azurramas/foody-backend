@@ -10,6 +10,7 @@ import (
 
 //Request ->
 type Request struct {
+	ID					int64      	`db:"id" json:"id"`	
 	UserName			string		`db:"user_name" json:"user_name"`
 	RequestContent     	string      `db:"request_content" json:"request_content"`
 	OrderID				int64     `db:"order_id" json:"order_id"`
@@ -36,12 +37,14 @@ func (r *Request) Create(strid string) error {
 		return err
 	}
 
-	_, err = tx.Exec("INSERT INTO requests( user_name, request_content, order_id ) values(?,?,?)", r.UserName, r.RequestContent, id )
+	request, err := tx.Exec("INSERT INTO requests( user_name, request_content, order_id ) values(?,?,?)", r.UserName, r.RequestContent, id )
 
 	if err != nil {
 		tx.Rollback()
 		return err
 	}
+
+	r.ID, err = request.LastInsertId()
 	r.OrderID = id
 	
 	tx.Commit()
