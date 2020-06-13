@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
 	"github.com/azurramas/food_ordering/models"
 	"github.com/azurramas/food_ordering/services"
 )
@@ -28,7 +29,6 @@ func (uc UserControler) Login(w http.ResponseWriter, r *http.Request) {
 	services.WriteJSON(w, u, 200)
 }
 
-
 //Create ->
 func (uc UserControler) Create(w http.ResponseWriter, r *http.Request) {
 	var user models.User
@@ -47,13 +47,19 @@ func (uc UserControler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	exists, err := user.FindOne()
+
+	if exists {
+		errMessage := "User already exists"
+		services.WriteJSON(w, errMessage, 400)
+		return
+	}
+
 	err = user.Create()
 	if err != nil {
 		fmt.Println(err)
 		services.WriteJSON(w, err, 400)
 		return
 	}
-
 	services.WriteJSON(w, user, 200)
-
 }

@@ -7,12 +7,11 @@ import (
 	"github.com/azurramas/food_ordering/services"
 )
 
-
 //User ->
 type User struct {
-	ID              int64                     `db:"id" json:"id"`
-	Username        string                    `db:"username" json:"username"`
-	Password        string                    `db:"password" json:"password"`
+	ID       int64  `db:"id" json:"id"`
+	Username string `db:"username" json:"username"`
+	Password string `db:"password" json:"password"`
 }
 
 // Find -> Checks if user is lggedin
@@ -26,6 +25,26 @@ func (u *User) Find() (bool, error) {
 		return false, err
 	}
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(u.Password))
+
+	if err == nil {
+		u.ID = user.ID
+
+		return true, err
+	}
+	return false, err
+
+}
+
+//FindOne ->
+func (u *User) FindOne() (bool, error) {
+	var user User
+	db := services.SQLDbAccess.GetSQLDB()
+
+	err := db.Get(&user, "SELECT * FROM users WHERE username = ?", u.Username)
+	if err != nil {
+
+		return false, err
+	}
 
 	if err == nil {
 		u.ID = user.ID

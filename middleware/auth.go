@@ -6,10 +6,11 @@ import (
 	//"fmt"
 	"net/http"
 	"strings"
-	"github.com/casbin/casbin"
-	"github.com/azurramas/food_ordering/services"
-	"github.com/azurramas/food_ordering/models"
+
 	"github.com/azurramas/food_ordering/controllers"
+	"github.com/azurramas/food_ordering/models"
+	"github.com/azurramas/food_ordering/services"
+	"github.com/casbin/casbin"
 )
 
 // Middlewares ->
@@ -23,7 +24,7 @@ type Provider struct {
 // BasicAuth ->
 func (m *Provider) BasicAuth(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 
-	if strings.Contains(r.RequestURI, "/request/") && r.Method == "POST"{
+	if strings.Contains(r.RequestURI, "/request/") && r.Method == "POST" {
 		next(w, r)
 		return
 	}
@@ -33,7 +34,12 @@ func (m *Provider) BasicAuth(w http.ResponseWriter, r *http.Request, next http.H
 		return
 	}
 
-	if (r.RequestURI == "/user" && r.Method == "POST") {
+	if r.RequestURI == "/user" && r.Method == "POST" {
+		next(w, r)
+		return
+	}
+
+	if strings.Contains(r.RequestURI, "/ws/") {
 		next(w, r)
 		return
 	}
